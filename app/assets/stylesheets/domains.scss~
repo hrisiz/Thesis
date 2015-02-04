@@ -1,0 +1,77 @@
+// Place all the styles related to the create controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+div#create_bg{
+	width:100%;
+	height:100%;
+	position:fixed;
+	left:0px;
+	top:0px;
+	background-color:rgba(0,0,0,0.9);
+	background-image:url("http://nobon.boo.jp/wallpapers/mac-2880x1800/mbprd-2880x1800-104.jpg");
+	background-size:100% 100%;
+	text-align:center;
+	color:white;
+}
+div#create_bg>div{
+	position:absolute;
+	top:20%;
+	left:10%;
+	height:50%;
+	width:50%;
+	background-color:rgba(255,255,255,0.1);
+	padding:1%;
+}
+div#create_bg button.close{
+	display:none;
+	position:absolute;
+	top:-12px;
+	right:-12px;
+	width:24px;
+	height:24px;
+}
+div#create_bg div#bottom_line{
+	position:absolute;
+	bottom:0%;
+	right:0%;
+	width:98%;
+	height:5%;
+	text-align:right;
+	font-size:0;
+}
+div#create_bg div#bottom_line>button:first-child{
+	border-top-left-radius:100%;
+}
+
+div#create_bg div#bottom_line>button{
+	cursor:pointer;
+	color:white;
+	height:100%;
+	background: -webkit-linear-gradient(black, green,black); /* For Safari 5.1 to 6.0 */
+	background: -o-linear-gradient(black, green,black); /* For Opera 11.1 to 12.0 */
+	background: -moz-linear-gradient(black, green,black); /* For Firefox 3.6 to 15 */
+	background: linear-gradient(black, green,black); /* Standard syntax */
+	min-width:20%;
+	border:none;
+	margin:0;
+}
+div#create_bg div#bottom_line>button:hover{
+	color:gold;
+}
+div#create_bg input{
+	width:50%;
+}
+div#create_bg input+label{
+	width:50%;
+}
+div#create_bg input+label:after{
+	content:"\a";
+    white-space: pre;
+}
+div#create_bg div.step{
+	display:none;
+}
+div#create_bg div.step:first-child{
+	display:block;
+}

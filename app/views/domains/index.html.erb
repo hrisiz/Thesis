@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Your Domains</h1>
+
+<table  class="table table-striped">
+  <thead>
+    <tr> 
+      <th>Domain Name</th>
+      <th>Status</th>
+      <th>Show</th>
+      <th>Start</th>
+      <th>Stop</th>
+      <th>Destroy</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @domains.each do |domain| %>
+      <tr>
+        <td><%= domain.domain_name+domain.domain %></td>
+        <td><%= domain.port %></td>
+
+        <td><%= domain.docker_id %></td>
+        <td class='<%= `docker ps -q |grep #{domain.docker_id[0..11]}`.to_s.empty? ? "text-error" : "text-success" %>'><strong><%= `docker ps -q |grep #{domain.docker_id[0..11]}`.to_s.empty? ? "Offline" : "Online" %></strong></td>
+        <td><%= link_to 'Show', 'http://'+domain.domain_name+domain.domain , class:'btn btn-info' %></td>
+        <td><%= link_to 'Start', "domains/#{domain.id}/start" , method: :post, data: { confirm: 'Are you sure?' }, class:'btn btn-info' %></td>  
+        <td><%= link_to 'Stop', "domains/#{domain.id}/stop", method: :post, data: { confirm: 'Are you sure?' }, class:'btn btn-info' %></td>
+        <td><%= link_to 'Destroy', domain, method: :delete, data: { confirm: 'Are you sure?' }, class:'btn btn-danger' %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Domain', new_domain_path, class:'btn btn-info' %>

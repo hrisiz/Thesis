@@ -1,0 +1,7 @@
+<p id="notice"><%= notice %></p>
+<%= bootstrap_form_tag(url:"/domains") do |f| %>
+  	<%= f.email_field :email , required:'required'%>
+  	<%= f.text_field :domain_name , required:'required' %>
+	<%= f.select :domain , [['.grizismu.net']] %>
+  	<%= f.submit "Create" , disabled:'disabled'%>
+<% end %>

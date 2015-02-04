@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	  	<title>Creater</title>
+		<%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+		<%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+		<%= csrf_meta_tags %>
+	</head>
+	<body class="theme-invert">
+
+		<!-- Main (Home) section -->
+		<section class="section" id="head">
+			<div class="container">
+
+				<div class="row">
+					<div class="col-md-10 col-lg-10 col-md-offset-1 col-lg-offset-1 text-center">	
+						<%= yield %>
+					</div> <!-- /col -->
+				</div> <!-- /row -->
+		
+			</div>
+		</section>
+	</body>
+
+</html>
+<script>
+	$(document).ready(function(){
+		$('input#domain_name').keydown(function(e){
+			if (!((e.keyCode >= 48 && e.keyCode <= 57)|| (e.keyCode >= 96 && e.keyCode <= 105)  || (e.keyCode >= 65 && e.keyCode <= 90) || (e.keyCode == 8))){
+				if (e.preventDefault) {
+		        	e.preventDefault();
+		    	} else {
+		        	e.returnValue = false;
+		    	}
+			}
+		});
+		$('form :required').keyup(function(){
+			$('form :required').each(function(){
+				if($(this).val().length <= 0){
+					$(this).parents('form').children('input[type="submit"]').removeClass('btn-success');
+					$(this).parents('form').children('input[type="submit"]').addClass('btn-default');
+					$(this).parents('form').children('input[type="submit"]').attr('disabled', 'disabled');
+					exit();
+				}
+			});
+			$(this).parents('form').children('input[type="submit"]').removeClass('btn-default');
+			$(this).parents('form').children('input[type="submit"]').addClass('btn-success');
+			$(this).parents('form').children('input[type="submit"]').removeAttr('disabled');
+		});
+	});
+</script>

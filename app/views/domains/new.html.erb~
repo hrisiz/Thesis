@@ -1,0 +1,6 @@
+
+<%= link_to 'My Domains', domains_path, class:'btn btn-info' %>
+<h1>New Domain</h1>
+
+<%= render 'form' %>
+

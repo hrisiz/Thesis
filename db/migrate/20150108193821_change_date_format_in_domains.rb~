@@ -1,0 +1,7 @@
+class ChangeDateFormatInDomains < ActiveRecord::Migration
+  def change
+	change_table :domains do |t|
+      		t.change :user, :string
+    	end
+  end
+end

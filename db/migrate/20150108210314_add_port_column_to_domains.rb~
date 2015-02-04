@@ -1,0 +1,4 @@
+class AddPortColumnToDomains < ActiveRecord::Migration
+  def change
+  end
+end
