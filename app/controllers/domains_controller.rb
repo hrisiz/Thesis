@@ -6,13 +6,13 @@ class DomainsController < ApplicationController
 
 
   HOST_IP = '192.168.0.102'
+  ROOT_PASSWORD = 'hrisiz'
+  DB_PASSWORD = 'Martin4o'
   FLLCASTS_FOLDER = "Desktop/heroku/fllcasts"
 
   # GET /domains
   # GET /domains.json
   def index
-    require 'socket'
-    
     user_id = current_user.id;
     @domains = Domain.where(user_id:user_id);
   end
@@ -121,21 +121,20 @@ class DomainsController < ApplicationController
 
     def create_the_web(domain)
       `cd ~/#{FLLCASTS_FOLDER} && docker build -t #{domain.domain_name} .`
-      # `cd ~/Desktop/heroku/fllcasts && docker build -t #{domain.domain_name} .`
       create_new_docker(domain)
       return 1
     end
 
     def create_new_docker(domain)
       domain.db_port = free_port(3306)
-      domain.docker_db_id = `docker run -d -p #{domain.db_port}:3306 --dns=#{HOST_IP} -e MYSQL_ROOT_PASSWORD=Martin4o mysql`
+      domain.docker_db_id = `docker run -d -p #{domain.db_port}:3306 --dns=#{HOST_IP} -e MYSQL_ROOT_PASSWORD=#{DB_PASSWORD} mysql`
       sleep(20);
       domain.port = free_port(3000)
-      rake_docker = `docker run -d -p #{domain.port}:3000  --restart="always" -e "RAILS_ENV=development" -e "DATABASE_URL=mysql2://root:Martin4o@#{HOST_IP}:#{domain.db_port}/railscasts_development" #{domain.domain_name} rake db:create db:schema:load `
+      rake_docker = `docker run -d -p #{domain.port}:3000  --restart="always" -e "RAILS_ENV=development" -e "DATABASE_URL=mysql2://root:#{DB_PASSWORD}@#{HOST_IP}:#{domain.db_port}/railscasts_development" #{domain.domain_name} rake db:create db:schema:load `
       sleep(20);
       `docker stop #{rake_docker[0..11]}`
       `docker rm #{rake_docker[0..11]}`
-      domain.docker_id = `docker run -d -p #{domain.port}:3000  --restart="always" -e "RAILS_ENV=development" -e "DATABASE_URL=mysql2://root:Martin4o@#{HOST_IP}:#{domain.db_port}/railscasts_development" #{domain.domain_name}`
+      domain.docker_id = `docker run -d -p #{domain.port}:3000  --restart="always" -e "RAILS_ENV=development" -e "DATABASE_URL=mysql2://root:#{DB_PASSWORD}@#{HOST_IP}:#{domain.db_port}/railscasts_development" #{domain.domain_name}`
       domain.save
     end
     def config_fllcast(config_info)
