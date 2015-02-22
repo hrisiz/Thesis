@@ -1,0 +1,5 @@
+LOCAL_IP: 192.168.0.102
+ROOT_PASSWORD: hrisiz
+DB_PASSWORD: Martin4o
+FLLCASTS_FOLDER: Desktop/heroku/fllcasts
+NGINX_CONFIG_FILES: Desktop/nginx_configs

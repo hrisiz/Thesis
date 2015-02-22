@@ -2,7 +2,7 @@
 <%= bootstrap_form_tag(url:"/domains") do |f| %>
   	<%= f.text_field :domain_name , required:'required' %>
   	<%= f.text_field :name , required:'required', name:'config[name]' %>
-  	<%= f.text_field :site , required:'required', name:'config[site]' %>
+	<%= f.select :media_host, [['http://media.fllcasts.com','media.fllcasts.com']],{ label: "Media host:" },{ name: "config[media_host_url]"} %>
 	<%= f.select :domain , [['.grizismu.net']] %>
   	<%= f.submit "Create" , disabled:'disabled' %>
 <% end %>

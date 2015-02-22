@@ -2,9 +2,6 @@ class DomainsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_domain, only: [:show, :edit, :update, :destroy, :start, :stop]
 
-
-
-
   HOST_IP = '192.168.0.102'
   ROOT_PASSWORD = 'hrisiz'
   DB_PASSWORD = 'Martin4o'
@@ -127,10 +124,10 @@ class DomainsController < ApplicationController
 
     def create_new_docker(domain)
       domain.db_port = free_port(3306)
-      domain.docker_db_id = `docker run -d -p #{domain.db_port}:3306 --dns=#{HOST_IP} -e MYSQL_ROOT_PASSWORD=#{DB_PASSWORD} mysql`
+      domain.docker_db_id = `docker run -d -p #{domain.db_port}:3306 --restart="always" --dns=#{HOST_IP} -e MYSQL_ROOT_PASSWORD=#{DB_PASSWORD} mysql`
       sleep(20);
       domain.port = free_port(3000)
-      rake_docker = `docker run -d -p #{domain.port}:3000  --restart="always" -e "RAILS_ENV=development" -e "DATABASE_URL=mysql2://root:#{DB_PASSWORD}@#{HOST_IP}:#{domain.db_port}/railscasts_development" #{domain.domain_name} rake db:create db:schema:load `
+      rake_docker = `docker run -d -p #{domain.port}:3000 -e "RAILS_ENV=development" -e "DATABASE_URL=mysql2://root:#{DB_PASSWORD}@#{HOST_IP}:#{domain.db_port}/railscasts_development" #{domain.domain_name} rake db:create db:schema:load `
       sleep(20);
       `docker stop #{rake_docker[0..11]}`
       `docker rm #{rake_docker[0..11]}`
